@@ -17,12 +17,36 @@ public class ControleFinanceiro {
         this.transacaoMap.put(atualId, transacao);
     }
 
+    public void removerTransacao(int id){
+        if (this.transacaoMap.containsKey(id)){
+            this.transacaoMap.remove(id);
+        } else {
+            System.out.println("Transação não encontrada!");
+        }
+    }
+
     public void listarTransacoes(){
         if (!this.transacaoMap.isEmpty()) {
             System.out.println(this.transacaoMap);
         } else {
             System.out.println("Lista vazia!");
         }
+    }
 
+    public double calcularSaldo(){
+        double receitas = 0;
+        double despesas = 0;
+        double saldo;
+
+        if(!this.transacaoMap.isEmpty()){
+            for (Map.Entry<Integer, Transacao> entry : this.transacaoMap.entrySet()){
+                if (entry.getValue().getTipo() == TipoTransacao.RECEITA) {
+                    receitas += entry.getValue().getValor();
+                } else if (entry.getValue().getTipo() == TipoTransacao.DESPESA){
+                    despesas += entry.getValue().getValor();
+                }
+            }
+        }
+        return saldo = receitas - despesas;
     }
 }
