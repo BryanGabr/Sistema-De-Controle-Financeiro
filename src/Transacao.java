@@ -1,9 +1,9 @@
 import java.util.Objects;
 
 public class Transacao {
-    int id;
-    String descricao;
-    double valor;
+    private int id;
+    private String descricao;
+    private double valor;
     private TipoTransacao tipo;
 
     public Transacao(int id, String descricao, double valor, TipoTransacao tipo) {
@@ -39,10 +39,7 @@ public class Transacao {
 
     @Override
     public String toString() {
-        return "Transacao{" +
-                "descricao='" + descricao + '\'' +
-                ", valor=" + valor +
-                ", tipo=" + tipo +
-                '}';
+        return " " + descricao + " - R$ " + valor + " (" + tipo + ")";
     }
+
 }

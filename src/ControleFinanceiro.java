@@ -36,7 +36,6 @@ public class ControleFinanceiro {
     public double calcularSaldo(){
         double receitas = 0;
         double despesas = 0;
-        double saldo;
 
         if(!this.transacaoMap.isEmpty()){
             for (Map.Entry<Integer, Transacao> entry : this.transacaoMap.entrySet()){
@@ -47,6 +46,7 @@ public class ControleFinanceiro {
                 }
             }
         }
-        return saldo = receitas - despesas;
+        return receitas - despesas;
     }
+
 }
