@@ -1,4 +1,6 @@
-import javax.swing.*;
+import model.TipoTransacao;
+import service.ControleFinanceiro;
+
 import java.util.Scanner;
 
 public class Main {

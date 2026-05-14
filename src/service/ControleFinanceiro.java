@@ -1,3 +1,10 @@
+package service;
+
+import exceptions.ControleFinanceiroException;
+import exceptions.ValorInvalidoException;
+import model.TipoTransacao;
+import model.Transacao;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,8 +17,10 @@ public class ControleFinanceiro {
         this.atualId = 0;
     }
 
-    public void adicionarTransacao(String descricao, double valor, TipoTransacao tipo){
+    public void adicionarTransacao(String descricao, double valor, TipoTransacao tipo) throws ControleFinanceiroException {
         this.atualId++;
+
+        if (valor <= 0) throw new ValorInvalidoException("Valor não pode ser nulo ou negativo!", valor);
 
         Transacao transacao = new Transacao(atualId, descricao, valor, tipo);
         this.transacaoMap.put(atualId, transacao);
@@ -27,7 +36,9 @@ public class ControleFinanceiro {
 
     public void listarTransacoes(){
         if (!this.transacaoMap.isEmpty()) {
-            System.out.println(this.transacaoMap);
+            for (Map.Entry<Integer, Transacao> entry: this.transacaoMap.entrySet()){
+                System.out.println("ID: " + entry.getKey() + " | " + entry.getValue().getDescricao() + " | R$ " + entry.getValue().getValor() + " | " + entry.getValue().getTipo());
+            }
         } else {
             System.out.println("Lista vazia!");
         }
