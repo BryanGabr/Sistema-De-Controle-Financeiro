@@ -20,7 +20,7 @@ public class ControleFinanceiro {
     public void adicionarTransacao(String descricao, double valor, TipoTransacao tipo) throws ControleFinanceiroException {
         this.atualId++;
 
-        if (valor <= 0) throw new ValorInvalidoException("Valor não pode ser nulo ou negativo!", valor);
+        if (valor <= 0) throw new ValorInvalidoException("Erro: valor inválido! ", valor);
 
         Transacao transacao = new Transacao(atualId, descricao, valor, tipo);
         this.transacaoMap.put(atualId, transacao);

@@ -1,3 +1,5 @@
+import exceptions.ControleFinanceiroException;
+import exceptions.ValorInvalidoException;
 import model.TipoTransacao;
 import service.ControleFinanceiro;
 
@@ -21,6 +23,8 @@ public class Main {
             System.out.println("4 - Saldo");
             System.out.println("5 - Remover");
             System.out.println("0 - Sair");
+
+            System.out.print("Opcão: ");
             opcao = input.nextInt();
             input.nextLine();
 
@@ -30,23 +34,46 @@ public class Main {
                     System.out.print("Descrição: ");
                     descricao = input.nextLine();
 
-                    System.out.print("Valor: ");
-                    valor = input.nextDouble();
-                    input.nextLine();
+                    while (true) {
+                        System.out.print("Valor: ");
+                        valor = input.nextDouble();
+                        input.nextLine();
 
-                    controleFinanceiro.adicionarTransacao(descricao, valor, TipoTransacao.RECEITA);
+                        try {
+                            controleFinanceiro.adicionarTransacao(descricao, valor, TipoTransacao.RECEITA);
+
+                            System.out.println("Transação realizada!");
+                            break;
+
+                        } catch (ControleFinanceiroException e) {
+                            System.out.println(e.getMessage());
+                        }
+
+                    }
+
                     break;
 
                 case 2:
                     System.out.print("Descrição: ");
                     descricao = input.nextLine();
 
-                    System.out.print("Valor: ");
-                    valor = input.nextDouble();
-                    input.nextLine();
+                    while (true) {
+                        System.out.print("Valor: ");
+                        valor = input.nextDouble();
+                        input.nextLine();
 
-                    controleFinanceiro.adicionarTransacao(descricao, valor, TipoTransacao.DESPESA);
-                    break;
+                        try {
+                            controleFinanceiro.adicionarTransacao(descricao, valor, TipoTransacao.DESPESA);
+
+                            System.out.println("Transação realizada!");
+                            break;
+
+                        } catch (ControleFinanceiroException e) {
+                            System.out.println(e.getMessage());
+                        }
+
+                    }
+                        break;
 
                 case 3:
                     controleFinanceiro.listarTransacoes();
