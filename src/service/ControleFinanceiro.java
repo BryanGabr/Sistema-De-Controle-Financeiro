@@ -1,6 +1,7 @@
 package service;
 
 import exceptions.ControleFinanceiroException;
+import exceptions.IdInvalidoException;
 import exceptions.ValorInvalidoException;
 import model.TipoTransacao;
 import model.Transacao;
@@ -26,7 +27,10 @@ public class ControleFinanceiro {
         this.transacaoMap.put(atualId, transacao);
     }
 
-    public void removerTransacao(int id){
+    public void removerTransacao(int id) throws ControleFinanceiroException{
+
+        if (id <= 0) throw new IdInvalidoException("Erro: Id inválido! ", id);
+
         if (this.transacaoMap.containsKey(id)){
             this.transacaoMap.remove(id);
         } else {

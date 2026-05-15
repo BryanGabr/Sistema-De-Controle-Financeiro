@@ -3,6 +3,7 @@ import exceptions.ValorInvalidoException;
 import model.TipoTransacao;
 import service.ControleFinanceiro;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -24,9 +25,18 @@ public class Main {
             System.out.println("5 - Remover");
             System.out.println("0 - Sair");
 
-            System.out.print("Opcão: ");
-            opcao = input.nextInt();
-            input.nextLine();
+            while (true) {
+                System.out.print("Opcão: ");
+
+                try {
+                    opcao = input.nextInt();
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("Erro: Entrada inválida! Digite apenas números.");
+                } finally {
+                    input.nextLine();
+                }
+            }
 
             switch (opcao){
 
@@ -36,17 +46,21 @@ public class Main {
 
                     while (true) {
                         System.out.print("Valor: ");
-                        valor = input.nextDouble();
-                        input.nextLine();
 
                         try {
+                            valor = input.nextDouble();
+
                             controleFinanceiro.adicionarTransacao(descricao, valor, TipoTransacao.RECEITA);
 
                             System.out.println("Transação realizada!");
                             break;
 
+                        } catch (InputMismatchException e) {
+                            System.out.println("Erro: Entrada inválida! Digite apenas números.");
                         } catch (ControleFinanceiroException e) {
                             System.out.println(e.getMessage());
+                        } finally {
+                            input.nextLine();
                         }
 
                     }
@@ -59,17 +73,21 @@ public class Main {
 
                     while (true) {
                         System.out.print("Valor: ");
-                        valor = input.nextDouble();
-                        input.nextLine();
 
                         try {
+                            valor = input.nextDouble();
+
                             controleFinanceiro.adicionarTransacao(descricao, valor, TipoTransacao.DESPESA);
 
                             System.out.println("Transação realizada!");
                             break;
 
+                        } catch (InputMismatchException e) {
+                            System.out.println("Erro: Entrada inválida! Digite apenas números.");
                         } catch (ControleFinanceiroException e) {
                             System.out.println(e.getMessage());
+                        } finally {
+                            input.nextLine();
                         }
 
                     }
@@ -85,12 +103,26 @@ public class Main {
                     break;
 
                 case 5:
-                    System.out.print("ID: ");
-                    int id = input.nextInt();
-                    input.nextLine();
 
-                    controleFinanceiro.removerTransacao(id);
+                    while (true) {
 
+                        System.out.print("ID: ");
+
+                        try {
+                            int id = input.nextInt();
+
+                            controleFinanceiro.removerTransacao(id);
+
+                            break;
+
+                        } catch (ControleFinanceiroException e) {
+                            System.out.println(e.getMessage());
+                        } catch (InputMismatchException e) {
+                            System.out.println("Erro: Entrada inválida! Digite apenas números.");
+                        } finally {
+                            input.nextLine();
+                        }
+                    }
                     break;
 
                 case 0:

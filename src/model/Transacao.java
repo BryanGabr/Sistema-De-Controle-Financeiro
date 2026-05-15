@@ -39,7 +39,7 @@ public class Transacao {
 
     @Override
     public String toString() {
-        return " " + descricao + " - R$ " + valor + " (" + tipo + ")";
+        return "[" + id +"] " + descricao + " - R$ " + valor + " (" + tipo + ")";
     }
 
 }
