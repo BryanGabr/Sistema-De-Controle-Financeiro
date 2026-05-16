@@ -1,5 +1,6 @@
 import exceptions.ControleFinanceiroException;
-import exceptions.ValorInvalidoException;
+
+import exceptions.DescricaoVaziaException;
 import model.TipoTransacao;
 import service.ControleFinanceiro;
 
@@ -41,8 +42,17 @@ public class Main {
             switch (opcao){
 
                 case 1:
-                    System.out.print("Descrição: ");
-                    descricao = input.nextLine();
+                    while (true) {
+                        System.out.print("Descrição: ");
+                        descricao = input.nextLine();
+
+                        if (descricao.trim().isEmpty()) {
+                            System.out.println("Descrição não foi informada! ");
+                            continue;
+                        }
+
+                        break;
+                    }
 
                     while (true) {
                         System.out.print("Valor: ");
@@ -57,19 +67,28 @@ public class Main {
 
                         } catch (InputMismatchException e) {
                             System.out.println("Erro: Entrada inválida! Digite apenas números.");
+
                         } catch (ControleFinanceiroException e) {
                             System.out.println(e.getMessage());
                         } finally {
                             input.nextLine();
                         }
-
                     }
 
                     break;
 
                 case 2:
-                    System.out.print("Descrição: ");
-                    descricao = input.nextLine();
+                    while (true) {
+                        System.out.print("Descrição: ");
+                        descricao = input.nextLine();
+
+                        if (descricao.trim().isEmpty()) {
+                            System.out.println("Descrição não foi informada! ");
+                            continue;
+                        }
+
+                        break;
+                    }
 
                     while (true) {
                         System.out.print("Valor: ");
@@ -84,6 +103,7 @@ public class Main {
 
                         } catch (InputMismatchException e) {
                             System.out.println("Erro: Entrada inválida! Digite apenas números.");
+
                         } catch (ControleFinanceiroException e) {
                             System.out.println(e.getMessage());
                         } finally {

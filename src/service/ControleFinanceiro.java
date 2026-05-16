@@ -1,6 +1,7 @@
 package service;
 
 import exceptions.ControleFinanceiroException;
+import exceptions.DescricaoVaziaException;
 import exceptions.IdInvalidoException;
 import exceptions.ValorInvalidoException;
 import model.TipoTransacao;
@@ -19,9 +20,11 @@ public class ControleFinanceiro {
     }
 
     public void adicionarTransacao(String descricao, double valor, TipoTransacao tipo) throws ControleFinanceiroException {
-        this.atualId++;
+        if (valor <= 0) throw new ValorInvalidoException(valor);
 
-        if (valor <= 0) throw new ValorInvalidoException("Erro: valor inválido! ", valor);
+        if (descricao.trim().isEmpty()) throw new DescricaoVaziaException(descricao);
+
+        this.atualId++;
 
         Transacao transacao = new Transacao(atualId, descricao, valor, tipo);
         this.transacaoMap.put(atualId, transacao);
