@@ -1,6 +1,5 @@
 import exceptions.ControleFinanceiroException;
 
-import exceptions.DescricaoVaziaException;
 import model.TipoTransacao;
 import service.ControleFinanceiro;
 
@@ -8,13 +7,11 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
         int opcao = 0;
-
-        String descricao = "";
-        double valor = 0;
 
         ControleFinanceiro controleFinanceiro = new ControleFinanceiro();
 
@@ -42,76 +39,16 @@ public class Main {
             switch (opcao){
 
                 case 1:
-                    while (true) {
-                        System.out.print("Descrição: ");
-                        descricao = input.nextLine();
 
-                        if (descricao.trim().isEmpty()) {
-                            System.out.println("Descrição não foi informada! ");
-                            continue;
-                        }
-
-                        break;
-                    }
-
-                    while (true) {
-                        System.out.print("Valor: ");
-
-                        try {
-                            valor = input.nextDouble();
-
-                            controleFinanceiro.adicionarTransacao(descricao, valor, TipoTransacao.RECEITA);
-
-                            System.out.println("Transação realizada!");
-                            break;
-
-                        } catch (InputMismatchException e) {
-                            System.out.println("Erro: Entrada inválida! Digite apenas números.");
-
-                        } catch (ControleFinanceiroException e) {
-                            System.out.println(e.getMessage());
-                        } finally {
-                            input.nextLine();
-                        }
-                    }
+                    adicionarTransacao(controleFinanceiro, lerDescricao(input), lerValor(input), TipoTransacao.RECEITA);
 
                     break;
 
                 case 2:
-                    while (true) {
-                        System.out.print("Descrição: ");
-                        descricao = input.nextLine();
 
-                        if (descricao.trim().isEmpty()) {
-                            System.out.println("Descrição não foi informada! ");
-                            continue;
-                        }
+                    adicionarTransacao(controleFinanceiro, lerDescricao(input), lerValor(input), TipoTransacao.DESPESA);
 
-                        break;
-                    }
-
-                    while (true) {
-                        System.out.print("Valor: ");
-
-                        try {
-                            valor = input.nextDouble();
-
-                            controleFinanceiro.adicionarTransacao(descricao, valor, TipoTransacao.DESPESA);
-
-                            System.out.println("Transação realizada!");
-                            break;
-
-                        } catch (InputMismatchException e) {
-                            System.out.println("Erro: Entrada inválida! Digite apenas números.");
-
-                        } catch (ControleFinanceiroException e) {
-                            System.out.println(e.getMessage());
-                        } finally {
-                            input.nextLine();
-                        }
-
-                    }
-                        break;
+                    break;
 
                 case 3:
                     controleFinanceiro.listarTransacoes();
@@ -154,5 +91,60 @@ public class Main {
                     System.out.println("Opcão inválida! ");
             }
         } while (opcao != 0);
+    }
+
+    private static void adicionarTransacao(ControleFinanceiro controleFinanceiro, String descricao, double valor, TipoTransacao tipo){
+        try {
+            controleFinanceiro.adicionarTransacao(descricao, valor, tipo);
+        } catch (ControleFinanceiroException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static String lerDescricao(Scanner input){
+
+        String descricao = "";
+
+        while (true) {
+            System.out.print("Descrição: ");
+
+            descricao = input.nextLine();
+
+            if (descricao.trim().isEmpty()) {
+                System.out.println("Descrição não foi informada! ");
+                continue;
+            }
+
+            break;
+        }
+
+        return descricao;
+    }
+
+    private static double lerValor(Scanner input) {
+
+        double valor = 0;
+
+        while (true) {
+            System.out.print("Valor: ");
+
+            try {
+                valor = input.nextDouble();
+
+                if (valor <=  0) {
+                    System.out.println("Valor não pode ser nulo ou negativo! Valor informado: R$ " + valor);
+                    continue;
+                }
+
+                break;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Erro: Entrada inválida! Digite apenas números.");
+            } finally {
+                input.nextLine();
+            }
+        }
+
+        return valor;
     }
 }
