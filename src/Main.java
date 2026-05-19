@@ -11,32 +11,15 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        int opcao = 0;
-
         ControleFinanceiro controleFinanceiro = new ControleFinanceiro();
 
+        int opcao;
+
         do {
-            System.out.println("1 - Adicionar receita");
-            System.out.println("2 - Adicionar despesa");
-            System.out.println("3 - Listar");
-            System.out.println("4 - Saldo");
-            System.out.println("5 - Remover");
-            System.out.println("0 - Sair");
 
-            while (true) {
-                System.out.print("Opcão: ");
+            opcao = menu(input);
 
-                try {
-                    opcao = input.nextInt();
-                    break;
-                } catch (InputMismatchException e) {
-                    System.out.println("Erro: Entrada inválida! Digite apenas números.");
-                } finally {
-                    input.nextLine();
-                }
-            }
-
-            switch (opcao){
+            switch (opcao) {
 
                 case 1:
 
@@ -51,7 +34,9 @@ public class Main {
                     break;
 
                 case 3:
+
                     controleFinanceiro.listarTransacoes();
+
                     break;
 
                 case 4:
@@ -61,25 +46,9 @@ public class Main {
 
                 case 5:
 
-                    while (true) {
+                    removerTransacao(controleFinanceiro, lerID(input));
 
-                        System.out.print("ID: ");
-
-                        try {
-                            int id = input.nextInt();
-
-                            controleFinanceiro.removerTransacao(id);
-
-                            break;
-
-                        } catch (ControleFinanceiroException e) {
-                            System.out.println(e.getMessage());
-                        } catch (InputMismatchException e) {
-                            System.out.println("Erro: Entrada inválida! Digite apenas números.");
-                        } finally {
-                            input.nextLine();
-                        }
-                    }
+                    System.out.println("Transação removida.");
                     break;
 
                 case 0:
@@ -93,17 +62,57 @@ public class Main {
         } while (opcao != 0);
     }
 
-    private static void adicionarTransacao(ControleFinanceiro controleFinanceiro, String descricao, double valor, TipoTransacao tipo){
+    private static int menu(Scanner input) {
+        System.out.println("1 - Adicionar receita");
+        System.out.println("2 - Adicionar despesa");
+        System.out.println("3 - Listar");
+        System.out.println("4 - Saldo");
+        System.out.println("5 - Remover");
+        System.out.println("0 - Sair");
+
+        return lerOpcao(input);
+    }
+
+    private static int lerOpcao(Scanner input) {
+        int opcao;
+
+        while (true) {
+            System.out.print("Opcão: ");
+
+            try {
+                opcao = input.nextInt();
+
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Erro: Entrada inválida! Digite apenas números.");
+            } finally {
+                input.nextLine();
+            }
+        }
+
+        return opcao;
+    }
+
+    private static void adicionarTransacao(ControleFinanceiro controleFinanceiro, String descricao, double valor, TipoTransacao tipo) {
         try {
             controleFinanceiro.adicionarTransacao(descricao, valor, tipo);
         } catch (ControleFinanceiroException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("Transação adicionada.");
     }
 
-    private static String lerDescricao(Scanner input){
+    private static void removerTransacao(ControleFinanceiro controleFinanceiro, int id) {
+        try {
+            controleFinanceiro.removerTransacao(id);
+        } catch (ControleFinanceiroException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
-        String descricao = "";
+    private static String lerDescricao(Scanner input) {
+
+        String descricao;
 
         while (true) {
             System.out.print("Descrição: ");
@@ -123,7 +132,7 @@ public class Main {
 
     private static double lerValor(Scanner input) {
 
-        double valor = 0;
+        double valor;
 
         while (true) {
             System.out.print("Valor: ");
@@ -131,7 +140,7 @@ public class Main {
             try {
                 valor = input.nextDouble();
 
-                if (valor <=  0) {
+                if (valor <= 0) {
                     System.out.println("Valor não pode ser nulo ou negativo! Valor informado: R$ " + valor);
                     continue;
                 }
@@ -147,4 +156,31 @@ public class Main {
 
         return valor;
     }
+
+    private static int lerID(Scanner input) {
+        int id;
+
+        while (true) {
+
+            System.out.print("ID: ");
+
+            try {
+                id = input.nextInt();
+
+                if (id <= 0) {
+                    System.out.println("ID não pode ser nulo ou negativo! " + "ID informado: " + id);
+                    continue;
+                }
+
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Erro: Entrada inválida! Digite apenas números.");
+            } finally {
+                input.nextLine();
+            }
+        }
+
+        return id;
+    }
+
 }

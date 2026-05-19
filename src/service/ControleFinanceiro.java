@@ -32,7 +32,7 @@ public class ControleFinanceiro {
 
     public void removerTransacao(int id) throws ControleFinanceiroException{
 
-        if (id <= 0) throw new IdInvalidoException("Erro: Id inválido! ", id);
+        if (id <= 0) throw new IdInvalidoException(id);
 
         if (this.transacaoMap.containsKey(id)){
             this.transacaoMap.remove(id);
@@ -44,7 +44,7 @@ public class ControleFinanceiro {
     public void listarTransacoes(){
         if (!this.transacaoMap.isEmpty()) {
             for (Map.Entry<Integer, Transacao> entry: this.transacaoMap.entrySet()){
-                System.out.println("ID: " + entry.getKey() + " | " + entry.getValue().getDescricao() + " | R$ " + entry.getValue().getValor() + " | " + entry.getValue().getTipo());
+                System.out.println(entry.getValue());;
             }
         } else {
             System.out.println("Lista vazia!");
