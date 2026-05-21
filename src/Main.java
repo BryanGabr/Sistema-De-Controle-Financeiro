@@ -96,10 +96,10 @@ public class Main {
     private static void adicionarTransacao(ControleFinanceiro controleFinanceiro, String descricao, double valor, TipoTransacao tipo) {
         try {
             controleFinanceiro.adicionarTransacao(descricao, valor, tipo);
+            System.out.println("Transação adicionada.");
         } catch (ControleFinanceiroException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("Transação adicionada.");
     }
 
     private static void removerTransacao(ControleFinanceiro controleFinanceiro, int id) {
