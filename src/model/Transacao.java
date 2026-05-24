@@ -21,11 +21,15 @@ public class Transacao {
         return tipo;
     }
 
+    private void setTipo(TipoTransacao tipo) {
+        this.tipo = tipo;
+    }
+
     public String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
+    private void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
@@ -33,8 +37,20 @@ public class Transacao {
         return valor;
     }
 
-    public void setValor(double valor) {
+    private void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public void alterarDescricao(String descricao) {
+        this.setDescricao(descricao);
+    }
+
+    private void alterarValor(double valor){
+        this.setValor(valor);
+    }
+
+    private void alterarTipo(TipoTransacao tipoTransacao){
+        this.setTipo(tipoTransacao);
     }
 
     @Override
