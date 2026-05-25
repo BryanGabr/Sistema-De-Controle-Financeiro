@@ -19,15 +19,15 @@ public class ControleFinanceiro {
         this.atualId = 0;
     }
 
-    public void adicionarTransacao(String descricao, double valor, TipoTransacao tipo) throws ControleFinanceiroException {
-        if (valor <= 0) throw new ValorInvalidoException(valor);
-
+    public void adicionarTransacao(String descricao, double valor, TipoTransacao tipoTransacao) throws ControleFinanceiroException {
         if (descricao.trim().isEmpty()) throw new DescricaoVaziaException(descricao);
+
+        if (valor <= 0) throw new ValorInvalidoException(valor);
 
         this.atualId++;
 
-        Transacao transacao = new Transacao(atualId, descricao, valor, tipo);
-        this.transacaoMap.put(atualId, transacao);
+        Transacao transacao = new Transacao(atualId, descricao, valor, tipoTransacao);
+        transacaoMap.put(atualId, transacao);
     }
 
     public void removerTransacao(int id) throws ControleFinanceiroException{
@@ -67,4 +67,46 @@ public class ControleFinanceiro {
         return receitas - despesas;
     }
 
+    public void alterarDescricao(int id, String descricao) throws ControleFinanceiroException{
+        if (id <= 0) throw new IdInvalidoException(id);
+
+        if (descricao.trim().isEmpty()) throw new DescricaoVaziaException(descricao);
+
+        Transacao transacao = this.transacaoMap.get(id);
+
+        if (transacao == null){
+            System.out.println("Transação não encontrada.");
+            return;
+        }
+
+        transacao.atualizarDescricao(descricao);
+    }
+
+    public void alterarValor(int id, double valor) throws ControleFinanceiroException {
+        if (id <= 0) throw new IdInvalidoException(id);
+
+        if (valor <= 0) throw new ValorInvalidoException(valor);
+
+        Transacao transacao = this.transacaoMap.get(id);
+
+        if (transacao == null){
+            System.out.println("Transação não encontrada.");
+            return;
+        }
+
+        transacao.atualizarValor(valor);
+    }
+
+    public void alterarTipo(int id, TipoTransacao tipoTransacao) throws ControleFinanceiroException{
+        if (id <= 0) throw new IdInvalidoException(id);
+
+        Transacao transacao = this.transacaoMap.get(id);
+
+        if (transacao == null){
+            System.out.println("Transação não encontrada.");
+            return;
+        }
+
+        transacao.atualizarTipo(tipoTransacao);
+    }
 }

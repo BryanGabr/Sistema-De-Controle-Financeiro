@@ -41,15 +41,15 @@ public class Transacao {
         this.valor = valor;
     }
 
-    public void alterarDescricao(String descricao) {
+    public void atualizarDescricao(String descricao) {
         this.setDescricao(descricao);
     }
 
-    private void alterarValor(double valor){
+    public void atualizarValor(double valor){
         this.setValor(valor);
     }
 
-    private void alterarTipo(TipoTransacao tipoTransacao){
+    public void atualizarTipo(TipoTransacao tipoTransacao){
         this.setTipo(tipoTransacao);
     }
 
