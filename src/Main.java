@@ -48,7 +48,11 @@ public class Main {
 
                     removerTransacao(controleFinanceiro, lerID(input));
 
-                    System.out.println("Transação removida.");
+                    break;
+
+                case 6:
+
+
                     break;
 
                 case 0:
@@ -68,6 +72,7 @@ public class Main {
         System.out.println("3 - Listar");
         System.out.println("4 - Saldo");
         System.out.println("5 - Remover");
+        System.out.println("6 - Atualizar transação");
         System.out.println("0 - Sair");
 
         return lerOpcao(input);
@@ -105,6 +110,7 @@ public class Main {
     private static void removerTransacao(ControleFinanceiro controleFinanceiro, int id) {
         try {
             controleFinanceiro.removerTransacao(id);
+            System.out.println("Transação removida.");
         } catch (ControleFinanceiroException e) {
             System.out.println(e.getMessage());
         }

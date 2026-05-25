@@ -67,46 +67,51 @@ public class ControleFinanceiro {
         return receitas - despesas;
     }
 
-    public void alterarDescricao(int id, String descricao) throws ControleFinanceiroException{
+    public Transacao buscarTransacao(int id) throws ControleFinanceiroException{
         if (id <= 0) throw new IdInvalidoException(id);
-
-        if (descricao.trim().isEmpty()) throw new DescricaoVaziaException(descricao);
 
         Transacao transacao = this.transacaoMap.get(id);
 
         if (transacao == null){
             System.out.println("Transação não encontrada.");
-            return;
+            return null;
         }
+
+        return transacao;
+    }
+
+    public void alterarDescricao(int id, String descricao) throws ControleFinanceiroException{
+        if (descricao.trim().isEmpty()) throw new DescricaoVaziaException(descricao);
+
+        Transacao transacao = buscarTransacao(id);
+
+        if (transacao == null) return;
 
         transacao.atualizarDescricao(descricao);
     }
 
     public void alterarValor(int id, double valor) throws ControleFinanceiroException {
-        if (id <= 0) throw new IdInvalidoException(id);
 
         if (valor <= 0) throw new ValorInvalidoException(valor);
 
-        Transacao transacao = this.transacaoMap.get(id);
+        Transacao transacao = buscarTransacao(id);
 
-        if (transacao == null){
-            System.out.println("Transação não encontrada.");
-            return;
-        }
+        if (transacao == null) return;
 
         transacao.atualizarValor(valor);
     }
 
     public void alterarTipo(int id, TipoTransacao tipoTransacao) throws ControleFinanceiroException{
-        if (id <= 0) throw new IdInvalidoException(id);
 
-        Transacao transacao = this.transacaoMap.get(id);
+        Transacao transacao = buscarTransacao(id);
 
-        if (transacao == null){
-            System.out.println("Transação não encontrada.");
-            return;
+        if (transacao == null) return;
+
+        if (transacao.getTipo() == TipoTransacao.RECEITA){
+            transacao.atualizarTipo(TipoTransacao.DESPESA);
+        } else {
+            transacao.atualizarTipo(TipoTransacao.RECEITA);
         }
 
-        transacao.atualizarTipo(tipoTransacao);
     }
 }
