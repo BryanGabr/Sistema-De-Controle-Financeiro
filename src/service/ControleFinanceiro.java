@@ -101,7 +101,7 @@ public class ControleFinanceiro {
         transacao.atualizarValor(valor);
     }
 
-    public void alterarTipo(int id, TipoTransacao tipoTransacao) throws ControleFinanceiroException{
+    public void alterarTipo(int id) throws ControleFinanceiroException{
 
         Transacao transacao = buscarTransacao(id);
 

@@ -51,7 +51,35 @@ public class Main {
                     break;
 
                 case 6:
+                    int opcaoEdicao;
 
+                    int id = lerID(input);
+
+                    do {
+
+                        opcaoEdicao = menuEditarTransacao(input);
+
+                        switch (opcaoEdicao) {
+
+                            case 1:
+                                editarDescricao(controleFinanceiro, id, lerDescricao(input));
+
+                                break;
+                            case 2:
+                                editarValor(controleFinanceiro, id, lerValor(input));
+
+                                break;
+                            case 3:
+                                alterarTipo(controleFinanceiro, id);
+
+                                break;
+                            case 0:
+                                System.out.println("Editar transação fechado.");
+                                break;
+                            default:
+                                System.out.println("Opção inválido!");
+                        }
+                    } while (opcaoEdicao != 0);
 
                     break;
 
@@ -72,7 +100,7 @@ public class Main {
         System.out.println("3 - Listar");
         System.out.println("4 - Saldo");
         System.out.println("5 - Remover");
-        System.out.println("6 - Atualizar transação");
+        System.out.println("6 - Editar transação");
         System.out.println("0 - Sair");
 
         return lerOpcao(input);
@@ -189,4 +217,39 @@ public class Main {
         return id;
     }
 
+    private static int menuEditarTransacao(Scanner input){
+        System.out.println("1 - Editar descrição");
+        System.out.println("2 - Editar Valor");
+        System.out.println("3 - Editar tipo transação");
+        System.out.println("0 - Sair");
+
+        return lerOpcao(input);
+    }
+
+    private static void editarDescricao(ControleFinanceiro controleFinanceiro, int id, String descricao){
+        try {
+            controleFinanceiro.alterarDescricao(id, descricao);
+            System.out.println("Descrição alterada.");
+        } catch (ControleFinanceiroException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void editarValor(ControleFinanceiro controleFinanceiro, int id, double valor){
+        try {
+            controleFinanceiro.alterarValor(id, valor);
+            System.out.println("Valor alterado");
+        } catch (ControleFinanceiroException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void alterarTipo(ControleFinanceiro controleFinanceiro, int id){
+        try {
+            controleFinanceiro.alterarTipo(id);
+            System.out.println("Tipo de transação alterado");
+        } catch (ControleFinanceiroException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
