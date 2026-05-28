@@ -114,4 +114,36 @@ public class ControleFinanceiro {
         }
 
     }
+
+    public void listarReceita(){
+        boolean receitaEncontrada = false;
+
+        for (Map.Entry<Integer, Transacao> entry : this.transacaoMap.entrySet()){
+            if (entry.getValue().getTipo() == TipoTransacao.RECEITA){
+                System.out.println(entry.getValue());
+                receitaEncontrada = true;
+            }
+        }
+
+        if (!receitaEncontrada){
+            System.out.println("Nenhuma receita cadastrada.");
+        }
+    }
+
+    public void listarDespesa(){
+        boolean despesaEncontrada = false;
+
+        for (Map.Entry<Integer, Transacao> entry : this.transacaoMap.entrySet()){
+            if (entry.getValue().getTipo() == TipoTransacao.RECEITA){
+                System.out.println(entry.getValue());
+                despesaEncontrada = true;
+            }
+        }
+
+        if (!despesaEncontrada){
+            System.out.println("Nenhuma receita cadastrada.");
+        }
+    }
+
+
 }
