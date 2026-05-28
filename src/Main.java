@@ -77,12 +77,16 @@ public class Main {
                                 System.out.println("Editar transação fechado.");
                                 break;
                             default:
-                                System.out.println("Opção inválido!");
+                                System.out.println("Opção inválida!");
                         }
                     } while (opcaoEdicao != 0);
 
                     break;
 
+                case 7:
+                    buscarTransacao(controleFinanceiro, lerID(input));
+
+                    break;
                 case 0:
                     System.out.println("Programa finalizado!");
 
@@ -101,6 +105,7 @@ public class Main {
         System.out.println("4 - Saldo");
         System.out.println("5 - Remover");
         System.out.println("6 - Editar transação");
+        System.out.println("7 - Buscar transação");
         System.out.println("0 - Sair");
 
         return lerOpcao(input);
@@ -248,6 +253,14 @@ public class Main {
         try {
             controleFinanceiro.alterarTipo(id);
             System.out.println("Tipo de transação alterado");
+        } catch (ControleFinanceiroException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void buscarTransacao(ControleFinanceiro controleFinanceiro, int id){
+        try {
+            System.out.println(controleFinanceiro.buscarTransacao(id));
         } catch (ControleFinanceiroException e) {
             System.out.println(e.getMessage());
         }
