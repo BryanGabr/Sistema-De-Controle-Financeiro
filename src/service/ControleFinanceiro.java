@@ -44,7 +44,7 @@ public class ControleFinanceiro {
     public void listarTransacoes(){
         if (!this.transacaoMap.isEmpty()) {
             for (Map.Entry<Integer, Transacao> entry: this.transacaoMap.entrySet()){
-                System.out.println(entry.getValue());;
+                System.out.println(entry.getValue());
             }
         } else {
             System.out.println("Lista vazia!");
@@ -145,5 +145,32 @@ public class ControleFinanceiro {
         }
     }
 
+    public double calcularReceita(){
+        double valorReceita = 0;
+
+        if (!this.transacaoMap.isEmpty()){
+            for (Map.Entry<Integer, Transacao> entry : this.transacaoMap.entrySet()){
+                if (entry.getValue().getTipo() == TipoTransacao.RECEITA){
+                    valorReceita += entry.getValue().getValor();
+                }
+            }
+        }
+
+        return valorReceita;
+    }
+
+    public double calcularDespesa(){
+        double valorDespesa = 0;
+
+        if (!this.transacaoMap.isEmpty()){
+            for (Map.Entry<Integer, Transacao> entry : this.transacaoMap.entrySet()){
+                if (entry.getValue().getTipo() == TipoTransacao.RECEITA){
+                    valorDespesa += entry.getValue().getValor();
+                }
+            }
+        }
+
+        return valorDespesa;
+    }
 
 }
