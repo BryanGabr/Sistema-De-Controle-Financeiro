@@ -7,7 +7,9 @@ import exceptions.ValorInvalidoException;
 import model.TipoTransacao;
 import model.Transacao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ControleFinanceiro {
@@ -116,32 +118,22 @@ public class ControleFinanceiro {
     }
 
     public void listarReceita(){
-        boolean receitaEncontrada = false;
-
-        for (Map.Entry<Integer, Transacao> entry : this.transacaoMap.entrySet()){
-            if (entry.getValue().getTipo() == TipoTransacao.RECEITA){
-                System.out.println(entry.getValue());
-                receitaEncontrada = true;
+        if (!this.transacaoMap.isEmpty()) {
+            for (Map.Entry<Integer, Transacao> entry : this.transacaoMap.entrySet()) {
+                if (entry.getValue().getTipo() == TipoTransacao.RECEITA) {
+                    System.out.println("Descrição: " + entry.getValue().getDescricao() + " | Valor: R$ " + entry.getValue().getValor());
+                }
             }
-        }
-
-        if (!receitaEncontrada){
-            System.out.println("Nenhuma receita cadastrada.");
         }
     }
 
     public void listarDespesa(){
-        boolean despesaEncontrada = false;
-
-        for (Map.Entry<Integer, Transacao> entry : this.transacaoMap.entrySet()){
-            if (entry.getValue().getTipo() == TipoTransacao.RECEITA){
-                System.out.println(entry.getValue());
-                despesaEncontrada = true;
+        if (!this.transacaoMap.isEmpty()) {
+            for (Map.Entry<Integer, Transacao> entry : this.transacaoMap.entrySet()) {
+                if (entry.getValue().getTipo() == TipoTransacao.DESPESA) {
+                    System.out.println("Descrição: " + entry.getValue().getDescricao() + " | Valor: R$ " + entry.getValue().getValor());
+                }
             }
-        }
-
-        if (!despesaEncontrada){
-            System.out.println("Nenhuma receita cadastrada.");
         }
     }
 
@@ -164,7 +156,7 @@ public class ControleFinanceiro {
 
         if (!this.transacaoMap.isEmpty()){
             for (Map.Entry<Integer, Transacao> entry : this.transacaoMap.entrySet()){
-                if (entry.getValue().getTipo() == TipoTransacao.RECEITA){
+                if (entry.getValue().getTipo() == TipoTransacao.DESPESA){
                     valorDespesa += entry.getValue().getValor();
                 }
             }

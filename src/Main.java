@@ -87,6 +87,35 @@ public class Main {
                     buscarTransacao(controleFinanceiro, lerID(input));
 
                     break;
+
+                case 8:
+                    relatorioFinanceiro(controleFinanceiro);
+
+                    int opcaoFiltro;
+
+                    do {
+                        opcaoFiltro = filtrarTipo(input);
+
+                        switch (opcaoFiltro){
+                            case 1:
+                                controleFinanceiro.listarReceita();
+
+                                break;
+                            case 2:
+                                controleFinanceiro.listarDespesa();
+
+                                break;
+                            case 0:
+                                System.out.println("Filtrar transação fechado");
+
+                                break;
+                            default:
+                                System.out.println("Opcão inválida! ");
+
+                        }
+                    } while (opcaoFiltro != 0);
+
+                    break;
                 case 0:
                     System.out.println("Programa finalizado!");
 
@@ -101,11 +130,12 @@ public class Main {
     private static int menu(Scanner input) {
         System.out.println("1 - Adicionar receita");
         System.out.println("2 - Adicionar despesa");
-        System.out.println("3 - Listar");
+        System.out.println("3 - Listar transações");
         System.out.println("4 - Saldo");
         System.out.println("5 - Remover");
         System.out.println("6 - Editar transação");
         System.out.println("7 - Buscar transação");
+        System.out.println("8 - Relatório financeiro");
         System.out.println("0 - Sair");
 
         return lerOpcao(input);
@@ -264,5 +294,19 @@ public class Main {
         } catch (ControleFinanceiroException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private static void relatorioFinanceiro(ControleFinanceiro controleFinanceiro){
+        System.out.println("Receita: R$ " + controleFinanceiro.calcularReceita());
+        System.out.println("Despesa: R$ " + controleFinanceiro.calcularDespesa());
+        System.out.println("Saldo: R$ " + controleFinanceiro.calcularSaldo());
+    }
+
+    private static int filtrarTipo(Scanner input){
+        System.out.println("1 - Ver receita");
+        System.out.println("2 - Ver Despesa");
+        System.out.println("0 - Sair");
+
+        return lerOpcao(input);
     }
 }
